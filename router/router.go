@@ -7,9 +7,21 @@ func Setup_Router() *gin.Engine {
 	router := gin.Default()
 	// router.Use(middleware.Cors())
 
-	router.GET("/", func(c *gin.Context) {
+	g0 := router.Group("api")
+
+	g0.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "Hello, World!",
+		})
+	})
+	g0.GET("/ok", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "ok",
+		})
+	})
+	g0.POST("/post", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "this is post",
 		})
 	})
 
