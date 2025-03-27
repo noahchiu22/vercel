@@ -1,11 +1,15 @@
 package router
 
-import "github.com/gin-gonic/gin"
+import (
+	"vercel/middleware"
+
+	"github.com/gin-gonic/gin"
+)
 
 func Setup_Router() *gin.Engine {
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
-	// router.Use(middleware.Cors())
+	router.Use(middleware.Cors())
 
 	g0 := router.Group("api")
 
