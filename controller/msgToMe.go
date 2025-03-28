@@ -1,4 +1,4 @@
-package handler
+package controller
 
 import (
 	"net/http"
@@ -8,12 +8,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func MsgToMe(g *gin.Context) {
-	c := Context{g}
+func MsgToMe(ctx *gin.Context) {
+	g := util.Context{Ctx: ctx}
 	var msg struct {
 		Message string `json:"message"`
 	}
-	c.ShouldBindJSON(&msg)
+	g.Ctx.ShouldBindJSON(&msg)
 
 	util.Push(models.Push{
 		To: util.TestUserId,
@@ -23,5 +23,5 @@ func MsgToMe(g *gin.Context) {
 		}},
 	}, util.TestToken)
 
-	c.SendResponse(http.StatusOK, "ok", msg.Message)
+	g.SendResponse(http.StatusOK, "ok", msg.Message)
 }

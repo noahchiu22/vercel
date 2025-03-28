@@ -2,13 +2,11 @@ package handler
 
 import (
 	"net/http"
+	"vercel/controller"
+	"vercel/middleware"
 
 	"github.com/gin-gonic/gin"
 )
-
-type Context struct {
-	*gin.Context
-}
 
 func Handler(w http.ResponseWriter, r *http.Request) {
 	server := Setup_Router()
@@ -16,9 +14,13 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	server.ServeHTTP(w, r)
 }
 
-func (c *Context) SendResponse(status int, message string, data any) {
-	c.JSON(status, gin.H{
-		"message": message,
-		"data":    data,
-	})
+func Setup_Router() *gin.Engine {
+	gin.SetMode(gin.ReleaseMode)
+	router := gin.Default()
+	router.Use(middleware.Cors())
+	g0 := router.Group("api")
+
+	g0.POST("/msgToMe", controller.MsgToMe)
+
+	return router
 }
